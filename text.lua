@@ -16,7 +16,7 @@ function gui.CreateText(String, Font, R, G, B, A)
 	}, TextMetatable)
 	self:CalculateDimensions()
 
-	return setmetatable(self, TextMetatable)
+	return self
 end
 
 function Text:SetColor(R, G, B, A)
@@ -73,13 +73,15 @@ end
 function Text:SetFormat(Position, Length, Font, R, G, B, A)
 	local Format
 	if Font or R or G or B or A then
-		Format = {}
+		Format = {
+			Font = Font;
+		}
 		if R or G or B or A then
 			Format.Color = {
-				R or self.Color[1],
-				G or self.Color[2],
-				B or self.Color[3],
-				A or self.Color[4],
+				R or self.Color[1];
+				G or self.Color[2];
+				B or self.Color[3];
+				A or self.Color[4];
 			}
 		end
 	end

@@ -18,3 +18,5 @@ love.filesystem.load(Path.."textarea.lua")(gui)
 love.filesystem.load(Path.."textfield.lua")(gui)
 love.filesystem.load(Path.."vslider.lua")(gui)
 love.filesystem.load(Path.."window.lua")(gui)
+
+love.filesystem.load(Path.."console.lua")(gui)
