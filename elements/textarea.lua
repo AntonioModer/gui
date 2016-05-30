@@ -17,24 +17,17 @@ function Element:Create(x, y, Width, Height, Parent)
 	return self
 end
 
-function Element:Filter(Text, Length, Position, Line)
+function Element:Filter(Text, Position, Length, Line)
+	return true
+end
+
+function Element:CanDelete(Position, Length, Line)
 	return true
 end
 
 function Element:TextInput(Text)
 	if not self.Disabled then
-		local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
-		local Max = math.max(self.Selected, self.Selected + self.SelectedLength) 
-		local LinePosition = 1
-		for Index, Line in pairs(self.Text.Line) do
-			if Min >= Line.Start then
-				LinePosition = Index
-			end
-		end
-		
-		if self:Filter(Text, Max - Min, Min, LinePosition) then
-			self:Write(Text)
-		end
+		self:Write(Text)
 	end
 	self.Base.TextInput(self, Text)
 end
@@ -57,16 +50,38 @@ function Element:KeyPressed(Key, ScanCode, IsRepeat)
 			self:TextInput("\n")
 		elseif Key == "backspace" then
 			if self.SelectedLength == 0 then
-				self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 2) .. self.Text.Text:utf8sub(self.Selected))
-				self.Selected = math.max(self.Selected - 1, 1)
+				local Min = self.Selected - 1
+				local Max = self.Selected
+				local LinePosition = 1
+				for Index, Line in pairs(self.Text.Line) do
+					if Line.Start <= Min then
+						LinePosition = Index
+					else
+						break
+					end
+				end
+				
+				if self:CanDelete(Min, Max - Min, LinePosition) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 2) .. self.Text.Text:utf8sub(self.Selected))
+					self.Selected = math.max(self.Selected - 1, 1)
+				end
 			else
 				local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 				local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
+				for Index, Line in pairs(self.Text.Line) do
+					if Line.Start <= Min then
+						LinePosition = Index
+					else
+						break
+					end
+				end
 				
-				self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
+				if self:CanDelete(Min, Max - Min, LinePosition) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
 				
-				self.Selected = math.max(Min, 1)
-				self.SelectedLength = 0
+					self.Selected = math.max(Min, 1)
+					self.SelectedLength = 0
+				end
 			end
 			self:UpdateText(true)
 		elseif Key == "delete" then
@@ -75,11 +90,20 @@ function Element:KeyPressed(Key, ScanCode, IsRepeat)
 			else
 				local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 				local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
+				for Index, Line in pairs(self.Text.Line) do
+					if Line.Start <= Min then
+						LinePosition = Index
+					else
+						break
+					end
+				end
 				
-				self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
-				
-				self.Selected = math.max(Min, 1)
-				self.SelectedLength = 0
+				if self:CanDelete(Min, Max - Min, LinePosition) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
+					
+					self.Selected = math.max(Min, 1)
+					self.SelectedLength = 0
+				end
 			end
 			self:UpdateText(true)
 		elseif Key == "left" then
@@ -137,12 +161,22 @@ end
 function Element:Write(Text)
 	local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 	local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
-
-	self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. Text .. self.Text.Text:utf8sub(Max))
+	local LinePosition = 1
+	for Index, Line in pairs(self.Text.Line) do
+		if Line.Start <= Min then
+			LinePosition = Index
+		else
+			break
+		end
+	end
 	
-	self.Selected = math.max(Min + Text:utf8len(), 1)
-	self.SelectedLength = 0
-	self:UpdateText(true)
+	if self:CanDelete(Min, Max - Min, LinePosition) and self:Filter(Text, Min, Max - Min, LinePosition) then
+		self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. Text .. self.Text.Text:utf8sub(Max))
+		
+		self.Selected = math.max(Min + Text:utf8len(), 1)
+		self.SelectedLength = 0
+		self:UpdateText(true)
+	end
 end
 
 function Element:SetText(Text)
