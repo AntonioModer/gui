@@ -96,7 +96,7 @@ function TextArea:Render()
 	love.graphics.setColor(80, 80, 80, 255)
 	love.graphics.rectangle("line", 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(unpack(self.BackgroundColor))
 	love.graphics.rectangle("fill", 1, 1, Width - 2, Height - 2)
 	
 	if self.Text.Text:utf8len() > 0 or self.IsTop then

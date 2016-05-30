@@ -1,7 +1,7 @@
 local gui = ...
-local Element = assert(gui.register("Console", "Window"))
+local Element = assert(gui.register("Console", "Base"))
 
-function Element:Create(Text, x, y, Width, Height, Parent)
+function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop
 	
 	self:SetParent(Parent)
@@ -11,4 +11,7 @@ function Element:Create(Text, x, y, Width, Height, Parent)
 	self:Init()
 	
 	return self
+end
+
+function Element:Print(Text)
 end

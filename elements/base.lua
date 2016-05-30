@@ -40,7 +40,17 @@ function Element:GetSkin()
 		if not self.Base then
 			return self.Skin[self.Type]
 		end
-		return self.Skin[self.Type] or self.Skin[self.Base.Type] or {}
+		local Base = self.Base
+		local Type = self.Type
+		while Base do
+			local Skin = self.Skin[Type]
+			if Skin then
+				return Skin
+			end
+			Type = Base.Type
+			Base = Base.Base
+		end
+		return {}
 	end
 	return {}
 end

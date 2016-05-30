@@ -3,6 +3,7 @@ local Element = gui.register("TextArea", "Base")
 
 Element.Selected = 1
 Element.SelectedLength = 0
+Element.BackgroundColor = {255, 255, 255, 255}
 
 function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop
@@ -16,13 +17,22 @@ function Element:Create(x, y, Width, Height, Parent)
 	return self
 end
 
-function Element:Filter(Text)
+function Element:Filter(Text, Length, Position, Line)
 	return true
 end
 
 function Element:TextInput(Text)
 	if not self.Disabled then
-		if self:Filter(Text) then
+		local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
+		local Max = math.max(self.Selected, self.Selected + self.SelectedLength) 
+		local LinePosition = 1
+		for Index, Line in pairs(self.Text.Line) do
+			if Min >= Line.Start then
+				LinePosition = Index
+			end
+		end
+		
+		if self:Filter(Text, Max - Min, Min, LinePosition) then
 			self:Write(Text)
 		end
 	end
@@ -218,4 +228,8 @@ function Element:Update()
 			self:MouseDrag(self.Grab.x, self.Grab.y, 0, 0)
 		end
 	end
+end
+
+function Element:SetBackgroundColor(R, G, B, A)
+	self.BackgroundColor = {R, G, B, A}
 end
