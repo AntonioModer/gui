@@ -6,7 +6,6 @@ return {
 	CheckBox = love.filesystem.load(Path.."checkbox.lua")(Path, gui),
 	CollapsibleCategory = love.filesystem.load(Path.."collapsiblecategory.lua")(Path, gui),
 	CollapsibleNode = love.filesystem.load(Path.."collapsiblenode.lua")(Path, gui),
-	ColorButton = love.filesystem.load(Path.."colorbutton.lua")(Path, gui),
 	ComboBox = love.filesystem.load(Path.."combobox.lua")(Path, gui),
 	Console = love.filesystem.load(Path.."console.lua")(Path, gui),
 	HSlider = love.filesystem.load(Path.."hslider.lua")(Path, gui),
