@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("CollapsibleCategory", "Base")
+local Element = gui.register("CollapsibleCategory", "Container")
 
 Element.NodeHeight = 20
 

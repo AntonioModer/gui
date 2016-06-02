@@ -1,9 +1,5 @@
 local gui = ...
-local Element = gui.register("Button", "Base")
-
-Element.Color = {255, 255, 255, 255}
-Element.ColorHover = {240, 240, 240, 255}
-Element.ColorPressed = {220, 220, 220, 255}
+local Element = gui.register("Button", "Element")
 
 function Element:Create(Text, x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop

@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("ListBox", "Base")
+local Element = gui.register("ListBox", "Container")
 
 function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop

@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("Window", "Base")
+local Element = gui.register("Window", "Container")
 
 Element.Closeable = true
 

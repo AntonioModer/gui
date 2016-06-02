@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("Desktop", "Base")
+local Element = gui.register("Desktop", "Container")
 
 function Element:Create()
 	self:SetPosition(0, 0)

@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("ComboBox", "Base")
+local Element = gui.register("ComboBox", "Element")
 
 Element.HeightOffset = 0
 

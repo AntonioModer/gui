@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("CheckBox", "Base")
+local Element = gui.register("CheckBox", "Element")
 
 function Element:Create(Text, x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop

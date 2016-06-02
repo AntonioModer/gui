@@ -2,6 +2,8 @@ local Path, gui = ...
 local TextArea = {}
 
 TextArea.Font = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextArea.BackgroundColor = {255, 255, 255, 255}
+TextArea.BorderColor = {80, 80, 80, 255}
 
 local function SliderValue(Slider)
 	Slider.Parent.Changed = true
@@ -12,8 +14,9 @@ function TextArea:Init()
 	
 	self.Text.Font = TextArea.Font
 	self.Text:SetColor(80, 80, 80, 255)
-	
-	self.Layout = {}
+
+	self.Layout.BackgroundColor = TextArea.Background
+	self.Layout.BorderColor = TextArea.BorderColor
 	
 	self.Layout.VSlider = gui.create("VSlider", 0, 0, 15, Height - 14, self)
 	self.Layout.VSlider.OnValue = SliderValue
@@ -93,10 +96,10 @@ end
 function TextArea:Render()
 	local Width, Height = self:GetDimensions()
 	
-	love.graphics.setColor(80, 80, 80, 255)
+	love.graphics.setColor(unpack(self.Layout.BorderColor))
 	love.graphics.rectangle("line", 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(unpack(self.BackgroundColor))
+	love.graphics.setColor(unpack(self.Layout.BackgroundColor))
 	love.graphics.rectangle("fill", 1, 1, Width - 2, Height - 2)
 	
 	if self.Text.Text:utf8len() > 0 or self.IsTop then

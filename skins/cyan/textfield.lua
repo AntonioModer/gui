@@ -2,8 +2,13 @@ local Path, gui = ...
 local TextField = {}
 
 TextField.Font = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextField.BackgroundColor = {255, 255, 255, 255}
+TextField.BorderColor = {80, 80, 80, 255}
 
 function TextField:Init()
+	self.Layout.BackgroundColor = TextField.BackgroundColor
+	self.Layout.BorderColor = TextField.BorderColor
+	
 	self.Text.Font = TextField.Font
 	self.Text:SetColor(80, 80, 80, 255)
 	self.HintText.Font = TextField.Font
@@ -74,10 +79,10 @@ end
 function TextField:Render()
 	local Width, Height = self:GetDimensions()
 	
-	love.graphics.setColor(100, 100, 100, 255)
+	love.graphics.setColor(unpack(self.Layout.BorderColor))
 	love.graphics.rectangle("line", 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(unpack(self.BackgroundColor))
+	love.graphics.setColor(unpack(self.Layout.BackgroundColor))
 	love.graphics.rectangle("fill", 1, 1, Width - 2, Height - 2)
 	
 	if self.Text.Text:utf8len() > 0 or self.IsTop then

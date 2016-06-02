@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("RoundedButton", "Base")
+local Element = gui.register("RoundedButton", "Element")
 
 Element.Color = {255, 255, 255, 255}
 Element.ColorHover = {240, 240, 240, 255}

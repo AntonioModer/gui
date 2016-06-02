@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("ProgressBar", "Base")
+local Element = gui.register("ProgressBar", "Element")
 
 Element.Progress = 0
 

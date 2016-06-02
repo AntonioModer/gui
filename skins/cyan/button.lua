@@ -8,10 +8,29 @@ end
 Button.Image = love.graphics.newImage(Button.Image)
 Button.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
 
+Button.Color = {255, 255, 255, 255}
+Button.ColorHover = {240, 240, 240, 255}
+Button.ColorPressed = {220, 220, 220, 255}
+Button.BorderColor = {100, 100, 100, 255}
+Button.ImageColor = {255, 255, 255, 255}
+Button.TextColor = {80, 80, 80, 255}
+
 function Button:Init()
-	self.Layout.Color = {unpack(self.Color)}
-	self.Text:SetColor(80, 80, 80, 255)
-	self.Text:SetFont(Button.TextFont)
+	self.Layout.Color = Button.Color
+	self.Layout.ColorHover = Button.ColorHover
+	self.Layout.ColorPressed = Button.ColorPressed
+	self.Layout.BorderColor = Button.BorderColor
+	self.Layout.ImageColor = Button.ImageColor
+	self.Layout.TextColor = Button.TextColor
+	self.Layout.TextFont = Button.TextFont
+	
+	self.Text:SetColor(self.Layout.TextColor)
+	self.Text:SetFont(self.Layout.TextFont)
+end
+
+function Button:UpdateLayout()
+	self.Text:SetColor(self.Layout.TextColor)
+	self.Text:SetFont(self.Layout.TextFont)
 end
 
 function Button:MouseEnter()
@@ -33,15 +52,15 @@ end
 function Button:Render()
 	local Width, Height = self:GetDimensions()
 	
-	love.graphics.setColor(100, 100, 100, 255)
+	love.graphics.setColor(self.Layout.BorderColor)
 	love.graphics.rectangle("line", 1, 1, Width - 2, Height - 2)
 	
 	if self.IsPressed then
-		love.graphics.setColor(self.ColorPressed)
+		love.graphics.setColor(self.Layout.ColorPressed)
 		love.graphics.draw(Button.Image, 1, 1, 0, Width - 2, (Height - 2)/20)
 		
 		if self.Image then
-			love.graphics.setColor(255, 255, 255, 255)
+			love.graphics.setColor(self.Layout.ImageColor)
 			love.graphics.draw(self.Image, math.floor((Width - self.Image:getWidth() - self.Text:getWidth())/2), math.floor((Height - self.Image:getHeight())/2))
 		end
 		
@@ -51,7 +70,7 @@ function Button:Render()
 		love.graphics.draw(Button.Image, 1, 1, 0, Width - 2, (Height - 3)/20)
 		
 		if self.Image then
-			love.graphics.setColor(255, 255, 255, 255)
+			love.graphics.setColor(self.Layout.ImageColor)
 			love.graphics.draw(self.Image, math.floor((Width - self.Image:getWidth() - self.Text:getWidth())/2), math.floor((Height - self.Image:getHeight())/2))
 		end
 		
@@ -61,7 +80,7 @@ function Button:Render()
 		love.graphics.draw(Button.Image, 1, 1, 0, Width - 2, (Height - 3)/20)
 		
 		if self.Image then
-			love.graphics.setColor(255, 255, 255, 255)
+			love.graphics.setColor(self.Layout.ImageColor)
 			love.graphics.draw(self.Image, math.floor((Width - self.Image:getWidth() - self.Text:getWidth())/2), math.floor((Height - self.Image:getHeight())/2))
 		end
 		

@@ -1,5 +1,5 @@
 local gui = ...
-local Element = assert(gui.register("Console", "Base"))
+local Element = assert(gui.register("Console", "Container"))
 
 function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop

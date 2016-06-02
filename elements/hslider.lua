@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("HSlider", "Base")
+local Element = gui.register("HSlider", "Container")
 
 -- NOTE THAT MOST OF THE IMPORTANT CODE OF THIS ELEMENT IS STORED ON THE SKIN SCRIPT
 function Element:Create(x, y, Width, Height, Parent)

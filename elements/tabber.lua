@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("Tabber", "Base")
+local Element = gui.register("Tabber", "Container")
 
 -- NOTE THAT MOST OF THE IMPORTANT CODE OF THIS ELEMENT IS STORED ON THE SKIN SCRIPT
 function Element:Create(x, y, Width, Height, Parent)

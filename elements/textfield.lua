@@ -1,9 +1,8 @@
 local gui = ...
-local Element = gui.register("TextField", "Base")
+local Element = gui.register("TextField", "Element")
 
 Element.Selected = 1
 Element.SelectedLength = 0
-Element.BackgroundColor = {255, 255, 255, 255}
 
 function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop
@@ -240,8 +239,4 @@ function Element:Update()
 			self:MouseDrag(self.Grab.x, self.Grab.y, 0, 0)
 		end
 	end
-end
-
-function Element:SetBackgroundColor(R, G, B, A)
-	self.BackgroundColor = {R, G, B, A}
 end

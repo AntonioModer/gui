@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("CollapsibleNode", "Base")
+local Element = gui.register("CollapsibleNode", "Container")
 
 Element.ChildrenHeight = 0
 Element.y = 0

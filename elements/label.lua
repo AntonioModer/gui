@@ -1,5 +1,5 @@
 local gui = ...
-local Element = gui.register("Label", "Base")
+local Element = gui.register("Label", "Element")
 
 function Element:Create(Text, x, y, Parent)
 	Parent = Parent or gui.Desktop
