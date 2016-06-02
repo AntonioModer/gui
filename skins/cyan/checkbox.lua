@@ -5,7 +5,7 @@ CheckBox.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
 CheckBox.TextColor = {80, 80, 80, 255}
 CheckBox.Color = {220, 220, 220, 255}
 CheckBox.HoverColor = {255, 255, 255, 255}
-CheckBox.CheckeImage = love.graphics.newImage(Path.."/Checked Checkbox-24.png")
+CheckBox.CheckImage = love.graphics.newImage(Path.."/Checked Checkbox-24.png")
 CheckBox.UncheckImage = love.graphics.newImage(Path.."/Unchecked Checkbox-24.png")
 
 function CheckBox:Init()
