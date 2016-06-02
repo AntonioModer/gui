@@ -12,7 +12,6 @@ return {
 	Label = love.filesystem.load(Path.."label.lua")(Path, gui),
 	ListBox = love.filesystem.load(Path.."listbox.lua")(Path, gui),
 	ProgressBar = love.filesystem.load(Path.."progressbar.lua")(Path, gui),
-	RoundedButton = love.filesystem.load(Path.."roundedbutton.lua")(Path, gui),
 	Tabber = love.filesystem.load(Path.."tabber.lua")(Path, gui),
 	TextArea = love.filesystem.load(Path.."textarea.lua")(Path, gui),
 	TextField = love.filesystem.load(Path.."textfield.lua")(Path, gui),
