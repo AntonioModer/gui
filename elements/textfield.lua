@@ -3,6 +3,7 @@ local Element = gui.register("TextField", "Base")
 
 Element.Selected = 1
 Element.SelectedLength = 0
+Element.BackgroundColor = {255, 255, 255, 255}
 
 function Element:Create(x, y, Width, Height, Parent)
 	Parent = Parent or gui.Desktop
@@ -21,15 +22,17 @@ function Element:Init()
 	self.Base.Init(self)
 end
 
-function Element:Filter(Text)
+function Element:Filter(Text, Position, Length)
+	return true
+end
+
+function Element:CanDelete(Position, Length)
 	return true
 end
 
 function Element:TextInput(Text)
 	if not self.Disabled then
-		if self:Filter(Text) then
-			self:Write(Text)
-		end
+		self:Write(Text)
 	end
 	self.Base.TextInput(self, Text)
 end
@@ -51,29 +54,43 @@ function Element:KeyPressed(Key, ScanCode, IsRepeat)
 			end
 		elseif Key == "backspace" then
 			if self.SelectedLength == 0 then
-				self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 2) .. self.Text.Text:utf8sub(self.Selected))
-				self.Selected = math.max(self.Selected - 1, 1)
+				local Min = self.Selected - 1
+				local Max = self.Selected
+				
+				if self:CanDelete(Min, Max - Min) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 2) .. self.Text.Text:utf8sub(self.Selected))
+					self.Selected = math.max(self.Selected - 1, 1)
+				end
 			else
 				local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 				local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
 				
-				self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
-				
-				self.Selected = math.max(Min, 1)
-				self.SelectedLength = 0
+				if self:CanDelete(Min, Max - Min) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
+					
+					self.Selected = math.max(Min, 1)
+					self.SelectedLength = 0
+				end
 			end
 			self:UpdateText()
 		elseif Key == "delete" then
 			if self.SelectedLength == 0 then
-				self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 1) .. self.Text.Text:utf8sub(self.Selected + 1))
+				local Min = self.Selected
+				local Max = self.Selected + 1
+				
+				if self:CanDelete(Min, Max - Min) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 1) .. self.Text.Text:utf8sub(self.Selected + 1))
+				end
 			else
 				local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 				local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
 				
-				self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
-				
-				self.Selected = math.max(Min, 1)
-				self.SelectedLength = 0
+				if self:CanDelete(Min, Max - Min) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. self.Text.Text:utf8sub(Max))
+					
+					self.Selected = math.max(Min, 1)
+					self.SelectedLength = 0
+				end
 			end
 			self:UpdateText()
 		elseif Key == "left" then
@@ -126,11 +143,13 @@ function Element:Write(Text)
 	local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 	local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
 
-	self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. Text .. self.Text.Text:utf8sub(Max))
-	
-	self.Selected = math.max(Min + Text:utf8len(), 1)
-	self.SelectedLength = 0
-	self:UpdateText()
+	if (Max - Min == 0 or self:CanDelete(Min, Max - Min, LinePosition)) and self:Filter(Text, Min, Max - Min) then
+		self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. Text .. self.Text.Text:utf8sub(Max))
+		
+		self.Selected = math.max(Min + Text:utf8len(), 1)
+		self.SelectedLength = 0
+		self:UpdateText()
+	end
 end
 
 function Element:SetText(Text)
@@ -221,4 +240,8 @@ function Element:Update()
 			self:MouseDrag(self.Grab.x, self.Grab.y, 0, 0)
 		end
 	end
+end
+
+function Element:SetBackgroundColor(R, G, B, A)
+	self.BackgroundColor = {R, G, B, A}
 end

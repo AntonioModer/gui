@@ -50,6 +50,7 @@ end
 
 function Element:Select(Index)
 	self.Selected = Index or 0
+	self.Changed = true
 end
 
 function Element:OnSelect(Item)

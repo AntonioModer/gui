@@ -86,10 +86,24 @@ function Element:KeyPressed(Key, ScanCode, IsRepeat)
 			self:UpdateText(true)
 		elseif Key == "delete" then
 			if self.SelectedLength == 0 then
-				self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 1) .. self.Text.Text:utf8sub(self.Selected + 1))
+				local Min = self.Selected
+				local Max = self.Selected + 1
+				local LinePosition = 0
+				for Index, Line in pairs(self.Text.Line) do
+					if Line.Start <= Min then
+						LinePosition = Index
+					else
+						break
+					end
+				end
+				
+				if self:CanDelete(Min, Max - Min, LinePosition) then
+					self.Text:SetText(self.Text.Text:utf8sub(1, self.Selected - 1) .. self.Text.Text:utf8sub(self.Selected + 1))
+				end
 			else
 				local Min = math.min(self.Selected, self.Selected + self.SelectedLength)
 				local Max = math.max(self.Selected, self.Selected + self.SelectedLength)
+				local LinePosition = 0
 				for Index, Line in pairs(self.Text.Line) do
 					if Line.Start <= Min then
 						LinePosition = Index
@@ -170,7 +184,7 @@ function Element:Write(Text)
 		end
 	end
 	
-	if self:CanDelete(Min, Max - Min, LinePosition) and self:Filter(Text, Min, Max - Min, LinePosition) then
+	if (Max - Min == 0 or self:CanDelete(Min, Max - Min, LinePosition)) and self:Filter(Text, Min, Max - Min, LinePosition) then
 		self.Text:SetText(self.Text.Text:utf8sub(1, Min - 1) .. Text .. self.Text.Text:utf8sub(Max))
 		
 		self.Selected = math.max(Min + Text:utf8len(), 1)

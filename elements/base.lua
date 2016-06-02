@@ -50,7 +50,6 @@ function Element:GetSkin()
 			Type = Base.Type
 			Base = Base.Base
 		end
-		return {}
 	end
 	return {}
 end
@@ -307,10 +306,6 @@ end
 
 function Element:GetHeight()
 	return self.Height
-end
-
-function Element:GetUniqueID()
-	return self.UniqueID
 end
 
 function Element:GetDimensions()
