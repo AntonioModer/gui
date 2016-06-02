@@ -1,7 +1,8 @@
 local Path, gui = ...
 local TextArea = {}
 
-TextArea.Font = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextArea.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextArea.TextColor = {80, 80, 80, 255}
 TextArea.BackgroundColor = {255, 255, 255, 255}
 TextArea.BorderColor = {80, 80, 80, 255}
 
@@ -12,12 +13,14 @@ end
 function TextArea:Init()
 	local Width, Height = self:GetDimensions()
 	
-	self.Text.Font = TextArea.Font
-	self.Text:SetColor(80, 80, 80, 255)
-
+	self.Layout.TextFont = TextArea.TextFont
+	self.Layout.TextColor = TextArea.TextColor
 	self.Layout.BackgroundColor = TextArea.Background
 	self.Layout.BorderColor = TextArea.BorderColor
 	
+	self.Text:SetFont(self.Layout.TextFont)
+	self.Text:SetColor(unpack(self.Layout.TextColor))
+
 	self.Layout.VSlider = gui.create("VSlider", 0, 0, 15, Height - 14, self)
 	self.Layout.VSlider.OnValue = SliderValue
 	
@@ -34,6 +37,9 @@ end
 
 function TextArea:UpdateLayout()
 	local Width, Height = self:GetDimensions()
+	
+	self.Text:SetFont(self.Layout.TextFont)
+	self.Text:SetColor(unpack(self.Layout.TextColor))
 	
 	self.Layout.VSlider:SetPosition(Width - 15, 0)
 	self.Layout.VSlider:SetDimensions(15, Height - 14)
@@ -96,10 +102,10 @@ end
 function TextArea:Render()
 	local Width, Height = self:GetDimensions()
 	
-	love.graphics.setColor(unpack(self.Layout.BorderColor))
+	love.graphics.setColor(self.Layout.BorderColor)
 	love.graphics.rectangle("line", 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(unpack(self.Layout.BackgroundColor))
+	love.graphics.setColor(self.Layout.BackgroundColor)
 	love.graphics.rectangle("fill", 1, 1, Width - 2, Height - 2)
 	
 	if self.Text.Text:utf8len() > 0 or self.IsTop then

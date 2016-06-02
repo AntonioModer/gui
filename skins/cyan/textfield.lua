@@ -1,20 +1,32 @@
 local Path, gui = ...
 local TextField = {}
 
-TextField.Font = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextField.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+TextField.TextColor = {80, 80, 80, 255}
+TextField.HintColor = {140, 140, 140, 255}
 TextField.BackgroundColor = {255, 255, 255, 255}
 TextField.BorderColor = {80, 80, 80, 255}
 
 function TextField:Init()
+	self.Layout.TextFont = TextField.TextFont
+	self.Layout.TextColor = TextField.TextColor
+	self.Layout.HintColor = TextField.HintColor
 	self.Layout.BackgroundColor = TextField.BackgroundColor
 	self.Layout.BorderColor = TextField.BorderColor
 	
-	self.Text.Font = TextField.Font
-	self.Text:SetColor(80, 80, 80, 255)
-	self.HintText.Font = TextField.Font
-	self.HintText:SetColor(140, 140, 140, 255)
+	self.Text:SetFont(self.Layout.TextFont)
+	self.Text:SetColor(unpack(self.Layout.TextColor))
+	self.HintText:SetFont(self.Layout.TextFont)
+	self.HintText:SetColor(unpack(self.Layout.HintColor))
 	
 	self.Layout.Offset = 0
+end
+
+function TextField:UpdateLayout()
+	self.Text:SetFont(self.Layout.TextFont)
+	self.Text:SetColor(unpack(self.Layout.TextColor))
+	self.HintText:SetFont(self.Layout.TextFont)
+	self.HintText:SetColor(unpack(self.Layout.HintColor))
 end
 
 function TextField:GetMousePosition(x, y)

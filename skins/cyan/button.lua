@@ -29,7 +29,7 @@ function Button:Init()
 end
 
 function Button:UpdateLayout()
-	self.Text:SetColor(self.Layout.TextColor)
+	self.Text:SetColor(unpack(self.Layout.TextColor))
 	self.Text:SetFont(self.Layout.TextFont)
 end
 
