@@ -281,3 +281,7 @@ end
 function Element:SetBackgroundColor(R, G, B, A)
 	self.BackgroundColor = {R, G, B, A}
 end
+
+function Element:SetFormat(Position, Length, Font, R, G, B, A)
+	self.Text:SetFormat(Position, Length, Font, R, G, B, A)
+end
