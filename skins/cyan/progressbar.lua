@@ -49,7 +49,10 @@ function Progress:Render(dt)
 	love.graphics.setFont(self.Layout.TextFont)
 	
 	local Text = (self.Progress * 100).." %"
-	love.graphics.print(Text,  math.floor((Width - Progress.TextFont:getWidth(Text))/2), math.floor((Height - Progress.TextFont:getHeight(Text))/2))
+	love.graphics.print(Text, 
+		math.floor((Width - self.Layout.TextFont:getWidth(Text))/2),
+		math.floor((Height - self.Layout.TextFont:getHeight(Text))/2)
+	)
 end
 
 return Progress
