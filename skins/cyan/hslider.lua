@@ -4,6 +4,9 @@ local Slider = {}
 Slider.Left = love.graphics.newImage(Path.."/Left-14.png")
 Slider.Right = love.graphics.newImage(Path.."/Right-14.png")
 
+Slider.BorderColor = {80, 80, 80, 255}
+Slider.BackgroundColor = {200, 200, 200, 255}
+
 local function SliderButtonDrag(Button, x, y, dx, dy)
 	local Slider = Button.Parent
 	if not Slider.Disabled then
@@ -53,6 +56,9 @@ end
 function Slider:Init()
 	local Width, Height = self:GetDimensions()
 	
+	self.Layout.BorderColor = Slider.BorderColor
+	self.Layout.BackgroundColor = Slider.BackgroundColor
+	
 	self.Layout.Left = gui.create("Button", "", 0, 0, 16, Height, self)
 	self.Layout.Left.Layout.Rounded = true
 	self.Layout.Left.Layout.ArcRadius = 4
@@ -88,10 +94,10 @@ end
 function Slider:Render(dt)
 	local Width, Height = self:GetDimensions()
 	
-	love.graphics.setColor(80, 80, 80, 255)
+	love.graphics.setColor(self.Layout.BorderColor)
 	gui.graphics.roundedbox("line", 4, 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(200, 200, 200, 255)
+	love.graphics.setColor(self.Layout.BackgroundColor)
 	gui.graphics.roundedbox("fill", 4, 1, 1, Width - 2, Height - 2)
 end
 

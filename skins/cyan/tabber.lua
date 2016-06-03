@@ -3,7 +3,14 @@ local Tabber = {}
 
 Tabber.Left = love.graphics.newImage(Path.."/Left-14.png")
 Tabber.Right = love.graphics.newImage(Path.."/Right-14.png")
+
 Tabber.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+Tabber.TextColor = {80, 80, 80, 255}
+
+Tabber.BorderColor = {80, 80, 80, 255}
+Tabber.SelectedColor = {255, 255, 255, 255}
+Tabber.HoverColor = {255, 255, 255, 255}
+Tabber.DefaultColor = {220, 220, 220, 255}
 
 Tabber.Image = love.image.newImageData(1, 20)
 for y = 0, 19 do
@@ -52,6 +59,14 @@ end
 function Tabber:Init()
 	local Width, Height = self:GetDimensions()
 	
+	self.Layout.TextFont = Tabber.TextFont
+	self.Layout.TextColor = Tabber.TextColor
+	
+	self.Layout.BorderColor = Tabber.BorderColor
+	self.Layout.SelectedColor = Tabber.SelectedColor
+	self.Layout.HoverColor = Tabber.HoverColor
+	self.Layout.DefaultColor = Tabber.DefaultColor
+	
 	self.Layout.Offset = 0
 	self.Layout.ItemsWidth = 0
 	
@@ -75,6 +90,11 @@ end
 function Tabber:UpdateLayout()
 	local Width, Height = self:GetDimensions()
 	
+	for i, Item in pairs(self.Item) do
+		self.Item:SetFont(self.Layout.TextFont)
+		self.Item:SetColor(unpack(self.Layout.TextColor))
+	end
+	
 	self.Layout.Left:SetDimensions(12, Height - 2)
 	self.Layout.Left:SetPosition(0, 2)
 	self.Layout.Left.Hidden = self.Layout.Offset == 0
@@ -97,24 +117,24 @@ function Tabber:Render()
 			end
 			
 			if self.Selected == i then
-				love.graphics.setColor(80, 80, 80, 255)
+				love.graphics.setColor(self.Layout.BorderColor)
 				love.graphics.rectangle("line", WidthOffset, 1, ItemWidth + 9, Height - 2)
 				
-				love.graphics.setColor(255, 255, 255, 255)
+				love.graphics.setColor(self.Layout.SelectedColor)
 				love.graphics.rectangle("fill", WidthOffset, 1, ItemWidth + 9, Height - 2)
 				Item:Draw(WidthOffset + 2, (Height - Item:getHeight())/2)
 			elseif self.IsHover and self.IsHover.x > WidthOffset and self.IsHover.x <= WidthOffset + ItemWidth + 10 then
-				love.graphics.setColor(80, 80, 80, 255)
+				love.graphics.setColor(self.Layout.BorderColor)
 				love.graphics.rectangle("line", WidthOffset, 3, ItemWidth + 9, Height - 4)
 				
-				love.graphics.setColor(255, 255, 255, 255)
+				love.graphics.setColor(self.Layout.HoverColor)
 				love.graphics.draw(Tabber.Image, WidthOffset, 3, 0, ItemWidth + 9, (Height - 4)/20)
 				Item:Draw(WidthOffset + 2, (Height + 2 - Item:getHeight())/2)
 			else
-				love.graphics.setColor(80, 80, 80, 255)
+				love.graphics.setColor(self.Layout.BorderColor)
 				love.graphics.rectangle("line", WidthOffset, 3, ItemWidth + 9, Height - 4)
 				
-				love.graphics.setColor(220, 220, 220, 255)
+				love.graphics.setColor(self.Layout.DefaultColor)
 				love.graphics.draw(Tabber.Image, WidthOffset, 3, 0, ItemWidth + 9, (Height - 4)/20)
 				Item:Draw(WidthOffset + 2, (Height + 2 - Item:getHeight())/2)
 			end
