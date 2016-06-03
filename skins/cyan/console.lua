@@ -12,7 +12,7 @@ function Console:Init()
 	local Width, Height = self:GetDimensions()
 	
 	self.Layout.TextArea = gui.create("TextArea", 0, 0, Width, Height, self)
-	self.Layout.TextArea:SetBackgroundColor(0, 0, 0, 255)
+	self.Layout.TextArea.Layout.BackgroundColor = {0, 0, 0, 255}
 	self.Layout.TextArea.Text.Font = Font
 	self.Layout.TextArea.Text.Color = {200, 200, 200, 255}
 	self.Layout.TextArea.CanDelete = CanDelete
