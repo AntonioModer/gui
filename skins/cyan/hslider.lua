@@ -53,15 +53,21 @@ end
 function Slider:Init()
 	local Width, Height = self:GetDimensions()
 	
-	self.Layout.Left = gui.create("RoundedButton", "", 0, 0, 16, Height, 4, self)
+	self.Layout.Left = gui.create("Button", "", 0, 0, 16, Height, self)
+	self.Layout.Left.Layout.Rounded = true
+	self.Layout.Left.Layout.ArcRadius = 4
 	self.Layout.Left:SetIcon(Slider.Left)
 	self.Layout.Left.Update = SliderButtonL
 	
-	self.Layout.Right = gui.create("RoundedButton", "", 0, 0, 16, Height, 4, self)
+	self.Layout.Right = gui.create("Button", "", 0, 0, 16, Height, self)
+	self.Layout.Right.Layout.Rounded = true
+	self.Layout.Right.Layout.ArcRadius = 4
 	self.Layout.Right:SetIcon(Slider.Right)
 	self.Layout.Right.Update = SliderButtonR
 	
-	self.Layout.Button = gui.create("RoundedButton", "", 16, 0, Width - 32, Height, 4, self)
+	self.Layout.Button = gui.create("Button", "", 16, 0, Width - 32, Height, self)
+	self.Layout.Button.Layout.Rounded = true
+	self.Layout.Button.Layout.ArcRadius = 4
 	self.Layout.Button.Layout.Image = nil
 	self.Layout.Button.MouseDrag = SliderButtonDrag
 end

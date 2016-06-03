@@ -60,9 +60,10 @@ end
 
 function Button:Render()
 	local Width, Height = self:GetDimensions()
+	local Radius = self.Layout.ArcRadius
 	
 	if self.Layout.Rounded then
-		Button.Width, Button.Height, Button.Radius = Width, Height, self.Layout.ArcRadius
+		Button.Width, Button.Height, Button.Radius = Width, Height, Radius
 	
 		love.graphics.setColor(self.Layout.BorderColor)
 		gui.graphics.roundedbox("line", self.Layout.ArcRadius, 1, 1, Width - 2, Height - 2)
