@@ -259,10 +259,10 @@ function Element:GetDimensions()
 	return self:GetWidth(), self:GetHeight()
 end
 
-function Element:UpdateLayout(dt)
+function Element:UpdateLayout()
 	local Skin = self:GetSkin()
 	if Skin.UpdateLayout then
-		Skin.UpdateLayout(self, dt, x, y)
+		Skin.UpdateLayout(self, x, y)
 	end
 end
 
@@ -276,6 +276,7 @@ end
 function Element:RenderSkin()
 	local Skin = self:GetSkin()
 	if Skin.Render then
+		self:UpdateLayout()
 		love.graphics.setCanvas(self.Canvas)
 		love.graphics.clear(0, 0, 0, 0)
 		Skin.Render(self)

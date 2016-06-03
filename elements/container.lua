@@ -57,7 +57,6 @@ end
 function Element:UpdateChildren(dt)
 	for _, Child in pairs(self.Children) do
 		Child:Update(dt)
-		Child:UpdateLayout(dt)
 		if Child.UpdateChildren then
 			Child:UpdateChildren(dt)
 		end

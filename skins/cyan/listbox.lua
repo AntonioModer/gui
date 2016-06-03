@@ -2,6 +2,10 @@ local Path, gui = ...
 local ListBox = {}
 
 ListBox.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+ListBox.TextColor = {80, 80, 80, 255}
+
+ListBox.BorderColor = {80, 80, 80, 255}
+ListBox.BackgroundColor = {255, 255, 255, 255}
 
 local function RoundedScissor()
 	gui.graphics.roundedbox("fill", 4, 0, 0, ListBox.Width, ListBox.Height)
@@ -9,6 +13,32 @@ end
 
 local function SliderMoved(Slider)
 	Slider.Parent.Changed = true
+end
+
+function ListBox:Init()
+	local Width, Height = self:GetDimensions()
+	
+	self.Layout.TextFont = ListBox.TextFont
+	self.Layout.TextColor = ListBox.TextColor
+	
+	self.Layout.BorderColor = ListBox.BorderColor
+	self.Layout.BackgroundColor = ListBox.BackgroundColor
+	
+	self.Layout.Slider = gui.create("VSlider", Width - 15, 0, 15, Height, self)
+	self.Layout.Slider.OnValue = SliderMoved
+end
+
+function ListBox:UpdateLayout()
+	local Width, Height = self:GetDimensions()
+	
+	for i, Item in pairs(self.Item) do
+		Item:SetFont(self.Layout.TextFont)
+		Item:SetColor(unpack(self.Layout.TextColor))
+	end
+	
+	self.Layout.Slider:SetDimensions(15, Height)
+	self.Layout.Slider:SetPosition(Width - 15, 0)
+	self.Layout.Slider.Hidden = self.Layout.Slider.Min >= self.Layout.Slider.Max
 end
 
 function ListBox:MouseMoved()
@@ -45,21 +75,6 @@ function ListBox:MousePressed(MouseX, MouseY, Button, IsTouch)
 	end
 end
 
-function ListBox:Init()
-	local Width, Height = self:GetDimensions()
-	
-	self.Layout.Slider = gui.create("VSlider", Width - 15, 0, 15, Height, self)
-	self.Layout.Slider.OnValue = SliderMoved
-end
-
-function ListBox:UpdateLayout()
-	local Width, Height = self:GetDimensions()
-	
-	self.Layout.Slider:SetDimensions(15, Height)
-	self.Layout.Slider:SetPosition(Width - 15, 0)
-	self.Layout.Slider.Hidden = self.Layout.Slider.Min >= self.Layout.Slider.Max
-end
-
 function ListBox:UpdateItems()
 	local HeightOffset = 0
 	for i, Item in pairs(self.Item) do
@@ -75,10 +90,10 @@ function ListBox:Render()
 	local Width, Height = self:GetDimensions()
 	ListBox.Width, ListBox.Height = Width, Height
 	
-	love.graphics.setColor(80, 80, 80, 255)
+	love.graphics.setColor(self.Layout.BorderColor)
 	gui.graphics.roundedbox("line", 4, 1, 1, Width - 2, Height - 2)
 	
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(self.Layout.BackgroundColor)
 	gui.graphics.roundedbox("fill", 4, 1, 1, Width - 2, Height - 2)
 	
 	love.graphics.stencil(RoundedScissor)
