@@ -1,7 +1,6 @@
 local Path, gui = ...
 
 return {
-	Base = love.filesystem.load(Path.."base.lua")(Path, gui),
 	Button = love.filesystem.load(Path.."button.lua")(Path, gui),
 	CheckBox = love.filesystem.load(Path.."checkbox.lua")(Path, gui),
 	CollapsibleCategory = love.filesystem.load(Path.."collapsiblecategory.lua")(Path, gui),
