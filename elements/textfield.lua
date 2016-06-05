@@ -190,9 +190,19 @@ function Element:MouseDrag(x, y, dx, dy)
 	self.Base.MouseDrag(self, x, y, dx, dy)
 end
 
-function Element:SetHover()
-	love.keyboard.setTextInput(true)
-	self.Base.SetHover(self)
+function Element:MakePopup()
+	print("pop up")
+	self.Base.MakePopup(self)
+	if gui.Mobile then
+		love.keyboard.setTextInput(true)
+	end
+end
+
+function Element:MakePulldown()
+	self.Base.MakePulldown(self)
+	if gui.Mobile then
+		love.keyboard.setTextInput(false)
+	end
 end
 
 function Element:SetHintText(Text)

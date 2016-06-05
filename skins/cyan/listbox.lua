@@ -39,6 +39,7 @@ function ListBox:UpdateLayout()
 	self.Layout.Slider:SetDimensions(15, Height)
 	self.Layout.Slider:SetPosition(Width - 15, 0)
 	self.Layout.Slider.Hidden = self.Layout.Slider.Min >= self.Layout.Slider.Max
+	print(self.Layout.Slider.Min, self.Layout.Slider.Max)
 end
 
 function ListBox:MouseMoved()
@@ -50,14 +51,14 @@ function ListBox:MouseExit()
 end
 
 function ListBox:WheelMoved(x, y)
-	self.Layout.Slider:SetValue(self.Layout.Slider.Value - y * 5)
+	self.Layout.Slider:SetValue(self.Layout.Slider.Value - y * 5 * self.Layout.Slider.Max / self.Height)
 	self.Changed = true
 end
 
 function ListBox:MousePressed(MouseX, MouseY, Button, IsTouch)
 	if Button == 1 then
 		local Width, Height = self:GetDimensions()
-		local HeightOffset = -self.Layout.Slider:GetValue() + 2.5
+		local HeightOffset = 2 - self.Layout.Slider:GetValue() * (self.Layout.Slider.Max - Height) / self.Layout.Slider.Max
 		for i, Item in pairs(self.Item) do
 			local ItemHeight = Item:getHeight()
 			if HeightOffset >= -ItemHeight then
@@ -82,7 +83,7 @@ function ListBox:UpdateItems()
 	end
 	
 	self.Layout.Slider.Min = self:GetHeight()
-	self.Layout.Slider.Max = math.max(self.Layout.Slider.Min, HeightOffset - self.Layout.Slider.Min + 4.5)
+	self.Layout.Slider.Max = math.max(self.Layout.Slider.Min, HeightOffset + 4)
 	self.Changed = true
 end
 
@@ -99,7 +100,7 @@ function ListBox:Render()
 	love.graphics.stencil(RoundedScissor)
 	love.graphics.setStencilTest("greater", 0)
 	
-	local HeightOffset = -self.Layout.Slider:GetValue() + 2.5
+	local HeightOffset = 2 - self.Layout.Slider:GetValue() * (self.Layout.Slider.Max - Height) / self.Layout.Slider.Max
 	for i, Item in pairs(self.Item) do
 		local ItemHeight = Item:getHeight()
 		

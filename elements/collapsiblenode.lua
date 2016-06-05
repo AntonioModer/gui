@@ -59,18 +59,6 @@ function Element:AdviseChildDimensions()
 	self.Parent:AdviseChildDimensions(self, self:GetWidth(), self:GetHeight())
 end
 
-function Element:SetColor(R, G, B, A)
-	self.Color = {R or 255, G or 255, B or 255, A or 255}
-end
-
-function Element:SetColorHover(R, G, B, A)
-	self.ColorHover = {R or 240, G or 240, B or 240, A or 255}
-end
-
-function Element:SetColorPressed(R, G, B, A)
-	self.ColorPressed = {R or 220, G or 220, B or 220, A or 255}
-end
-
 function Element:SetIcon(Image)
 	self.Image = Image
 end

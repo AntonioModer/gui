@@ -21,8 +21,7 @@ end
 
 function Element:SetItem(Index, Text)
 	if type(Text) == "string" then
-		local Skin = self:GetSkin()
-		self.Item[Index] = gui.CreateText(Text, Skin.TextFont, 80, 80, 80, 255)
+		self.Item[Index] = gui.CreateText(Text, self.Layout.TextFont, 80, 80, 80, 255)
 		self:UpdateItems()
 	elseif Text == nil then
 		self.Item[Index] = nil
@@ -32,12 +31,7 @@ function Element:SetItem(Index, Text)
 end
 
 function Element:UpdateItems()
-	local Items = {}
-	for Index, Item in pairs(self.Item) do
-		table.insert(Items, Item)
-	end
-	self.Item = Items
-	
+	table.sort(self.Item)
 	local Skin = self:GetSkin()
 	if Skin.UpdateItems then
 		Skin.UpdateItems(self)

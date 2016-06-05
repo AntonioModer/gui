@@ -4,6 +4,7 @@ local gui = {}
 gui.Skin = Path.."/skins/cyan/"
 gui.Elements = {}
 gui.Fonts = {}
+gui.Mobile = love.system.getOS() == "Android" or love.system.getOS() == "iOS"
 
 assert(love.filesystem.load(Path.."/fonts/init.lua"))(Path.."/fonts/", gui)
 assert(love.filesystem.load(Path.."/string.lua"))(Path, gui)
