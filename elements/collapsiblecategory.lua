@@ -26,6 +26,7 @@ end
 
 function Element:AdviseChildDimensions(Child, Width, Height)
 	self.Parent:AdviseChildDimensions(self, self:GetWidth(), self:GetHeight())
+	self:UpdateLayout()
 end
 
 function Element:SetNodeHeight(Height)

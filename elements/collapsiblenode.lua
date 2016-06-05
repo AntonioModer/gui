@@ -10,9 +10,6 @@ function Element:Create(Text, Radius, Parent)
 
 	self:SetParent(Parent)
 	self:SetText(Text)
-	self:SetColor()
-	self:SetColorHover()
-	self:SetColorPressed()
 	self:Init()
 	
 	return self

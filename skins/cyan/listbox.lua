@@ -39,7 +39,6 @@ function ListBox:UpdateLayout()
 	self.Layout.Slider:SetDimensions(15, Height)
 	self.Layout.Slider:SetPosition(Width - 15, 0)
 	self.Layout.Slider.Hidden = self.Layout.Slider.Min >= self.Layout.Slider.Max
-	print(self.Layout.Slider.Min, self.Layout.Slider.Max)
 end
 
 function ListBox:MouseMoved()
