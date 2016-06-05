@@ -63,7 +63,10 @@ end
 function Element:MousePressed(MouseX, MouseY, Button, IsTouch)
 	if not self.Disabled and MouseY < self.Parent:GetNodeHeight() then
 		self.Open = not self.Open
-		self.Canvas = love.graphics.newCanvas(self:GetWidth(), self:GetHeight())
+		
+		local Width, Height = self:GetDimensions()
+		self.Canvas = love.graphics.newCanvas(Width, Height)
+		self.Parent:AdviseChildDimensions(self, Width, Height)
 		self.Changed = true
 	end
 	self:OnMousePressed(MouseX, MouseY, Button, IsTouch)
