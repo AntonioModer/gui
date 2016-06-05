@@ -7,6 +7,7 @@ return {
 	CollapsibleNode = love.filesystem.load(Path.."collapsiblenode.lua")(Path, gui),
 	ComboBox = love.filesystem.load(Path.."combobox.lua")(Path, gui),
 	Console = love.filesystem.load(Path.."console.lua")(Path, gui),
+	Graph = love.filesystem.load(Path.."graph.lua")(Path, gui),
 	HSlider = love.filesystem.load(Path.."hslider.lua")(Path, gui),
 	Label = love.filesystem.load(Path.."label.lua")(Path, gui),
 	ListBox = love.filesystem.load(Path.."listbox.lua")(Path, gui),
