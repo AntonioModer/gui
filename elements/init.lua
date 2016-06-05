@@ -18,6 +18,8 @@ love.filesystem.load(Path.."progressbar.lua")(gui)
 love.filesystem.load(Path.."tabber.lua")(gui)
 love.filesystem.load(Path.."textarea.lua")(gui)
 love.filesystem.load(Path.."textfield.lua")(gui)
+love.filesystem.load(Path.."treeview.lua")(gui)
+love.filesystem.load(Path.."treeviewnode.lua")(gui)
 love.filesystem.load(Path.."vslider.lua")(gui)
 love.filesystem.load(Path.."window.lua")(gui)
 

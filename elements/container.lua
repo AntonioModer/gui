@@ -6,15 +6,16 @@ function Element:Init()
 	self.ChildrenRender = {}
 	self.Layout = {}
 	
+	local Skin = self:GetSkin()
+	if Skin.Init then
+		Skin.Init(self)
+	end
+	
 	local Width, Height = self:GetDimensions()
 	if Width and Height and Width > 0 and Height > 0 then
 		self.Canvas = love.graphics.newCanvas(Width, Height)
 	end
 	
-	local Skin = self:GetSkin()
-	if Skin.Init then
-		Skin.Init(self)
-	end
 	self.Changed = true
 end
 
@@ -78,14 +79,18 @@ function Element:RenderChildrenCanvas()
 end
 
 function Element:RenderChildren(x, y)
+	local IntersectX, IntersectY, IntersectWidth, IntersectHeight = love.graphics.getScissor()
 	for _, Child in pairs(self.ChildrenRender) do
 		if not Child.Hidden then
 			local Horizontal, Vertical = Child:GetPosition()
-			local x, y = Horizontal + x, Vertical + y
-			Child:Render(x, y)
+			local ChildX, ChildY = Horizontal + x, Vertical + y
+			love.graphics.intersectScissor(ChildX, ChildY, Child:GetDimensions())
+
+			Child:Render(ChildX, ChildY)
 			if Child.RenderChildren then
-				Child:RenderChildren(x, y)
+				Child:RenderChildren(ChildX, ChildY)
 			end
+			love.graphics.setScissor(IntersectX, IntersectY, IntersectWidth, IntersectHeight)
 		end
 	end
 end

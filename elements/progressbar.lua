@@ -19,3 +19,7 @@ function Element:SetProgress(Progress)
 	self.Changed = true
 	return self
 end
+
+function Element:GetProgress()
+	return self.Progress
+end

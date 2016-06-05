@@ -58,9 +58,11 @@ end
 function Element:Render(dt, x, y)
 	self:RenderChildrenCanvas()
 	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setScissor(x, y, self:GetDimensions())
 	self:RenderChildren(x, y)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.setCanvas()
+	love.graphics.setScissor()
 end
 
 function Element:MousePressed(MouseX, MouseY, Button, IsTouch)

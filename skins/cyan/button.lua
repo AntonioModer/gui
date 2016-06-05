@@ -11,13 +11,13 @@ for y = 0, 19 do
 end
 Button.Image = love.graphics.newImage(Button.Image)
 Button.TextFont = love.graphics.newFont(gui.Fonts["Kanit Light"], 13)
+Button.TextColor = {80, 80, 80, 255}
 
 Button.Color = {255, 255, 255, 255}
 Button.ColorHover = {240, 240, 240, 255}
 Button.ColorPressed = {220, 220, 220, 255}
 Button.BorderColor = {100, 100, 100, 255}
 Button.ImageColor = {255, 255, 255, 255}
-Button.TextColor = {80, 80, 80, 255}
 Button.Rounded = false
 Button.ArcRadius = 4
 

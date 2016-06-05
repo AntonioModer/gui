@@ -74,6 +74,7 @@ end
 
 function Element:RenderChildren(...)
 	if self.Open then
+		-- Do not call a render process if it's not necessary to
 		self.Base.RenderChildren(self, ...)
 	end
 end

@@ -4,15 +4,16 @@ local Element = gui.register("Element", "Base")
 function Element:Init()
 	self.Layout = {}
 	
+	local Skin = self:GetSkin()
+	if Skin.Init then
+		Skin.Init(self)
+	end
+	
 	local Width, Height = self:GetDimensions()
 	if Width and Height and Width > 0 and Height > 0 then
 		self.Canvas = love.graphics.newCanvas(Width, Height)
 	end
 	
-	local Skin = self:GetSkin()
-	if Skin.Init then
-		Skin.Init(self)
-	end
 	self.Changed = true
 end
 
