@@ -1,10 +1,19 @@
 local Path, gui = ...
 local TreeViewNode = {}
 
+TreeViewNode.Plus = love.graphics.newImage(Path.."/Plus 2 Math-12.png")
+TreeViewNode.Minus = love.graphics.newImage(Path.."/Minus 2 Math-12.png")
+
 function TreeViewNode:Init()
 	self.Layout.TextFont = self.Parent.Layout.TextFont
 	self.Layout.TextColor = self.Parent.Layout.TextColor
 	self.Layout.HeightOffset = self.Text:getHeight()
+	
+	self.Layout.Color = TreeViewNode.Color
+	self.Layout.ColorHover = TreeViewNode.ColorHover
+	
+	self.Layout.PlusImage = TreeViewNode.Plus
+	self.Layout.MinusImage = TreeViewNode.Minus
 	
 	self.Text:SetColor(unpack(self.Layout.TextColor))
 	self.Text:SetFont(self.Layout.TextFont)
@@ -24,10 +33,27 @@ function TreeViewNode:UpdateLayout()
 end
 
 function TreeViewNode:Render()
-	love.graphics.setColor(self.Layout.TextColor)
-	love.graphics.setFont(self.Layout.TextFont)
-	love.graphics.print("+", 0, 0)
-	self.Text:Draw(10, 0)
+	local Width, Height = self:GetDimensions()
+	
+	if self.Open then
+		love.graphics.draw(self.Layout.PlusImage, 0, math.floor((self.Text:getHeight() - self.Layout.PlusImage:getHeight())/2))
+		love.graphics.setColor(self.Layout.TextColor)
+		love.graphics.setFont(self.Layout.TextFont)
+		self.Text:Draw(self.Layout.PlusImage:getWidth() + 2, 0)
+	else
+		love.graphics.draw(self.Layout.MinusImage, 0, math.floor((self.Text:getHeight() - self.Layout.MinusImage:getHeight())/2))
+		love.graphics.setColor(self.Layout.TextColor)
+		love.graphics.setFont(self.Layout.TextFont)
+		self.Text:Draw(self.Layout.MinusImage:getWidth() + 2, 0)
+	end
+end
+
+function TreeViewNode:MouseEnter()
+	self.Changed = true
+end
+
+function TreeViewNode:MouseExit()
+	self.Changed = true
 end
 
 return TreeViewNode
