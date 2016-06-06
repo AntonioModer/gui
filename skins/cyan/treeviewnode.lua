@@ -1,8 +1,8 @@
 local Path, gui = ...
 local TreeViewNode = {}
 
-TreeViewNode.Plus = love.graphics.newImage(Path.."/Plus 2 Math-12.png")
-TreeViewNode.Minus = love.graphics.newImage(Path.."/Minus 2 Math-12.png")
+TreeViewNode.Plus = love.graphics.newImage(Path.."/Plus 2 Math-14.png")
+TreeViewNode.Minus = love.graphics.newImage(Path.."/Minus 2 Math-14.png")
 
 function TreeViewNode:Init()
 	self.Layout.TextFont = self.Parent.Layout.TextFont
@@ -22,7 +22,7 @@ end
 function TreeViewNode:UpdateLayout()
 	self.Layout.HeightOffset = self.Text:getHeight() + 2
 	for Index, Child in pairs(self.ChildrenRender) do
-		Child.x = 5
+		Child.x = 10
 		Child.y = self.Layout.HeightOffset
 		
 		self.Layout.HeightOffset = self.Layout.HeightOffset + Child:GetHeight() + 2
@@ -46,6 +46,12 @@ function TreeViewNode:Render()
 		love.graphics.setFont(self.Layout.TextFont)
 		self.Text:Draw(self.Layout.MinusImage:getWidth() + 2, 0)
 	end
+end
+
+function TreeViewNode:MousePressed()
+	self.Open = not self.Open
+	self.Changed = true
+	self.Parent.Changed = true
 end
 
 function TreeViewNode:MouseEnter()

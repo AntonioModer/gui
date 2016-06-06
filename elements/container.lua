@@ -31,6 +31,11 @@ function Element:AddChild(Child)
 	end
 	self.Children[ID] = Child
 	
+	local Skin = self:GetSkin()
+	if Skin.AddChild then
+		Skin.AddChild(self, Child)
+	end
+	
 	return ID
 end
 

@@ -27,10 +27,11 @@ function Element:GetHeight()
 	return self.Text:getHeight()
 end
 
-function Element:MousePressed(x, y, Button, IsTouch)
-	self.Open = not self.Open
-	self.Changed = true
-	return self.Base.MousePressed(self, x, y, Button, IsTouch)
+-- This shouldn't be able to be on top
+function Element:SetHover()
+	if self.Parent then
+		self.Parent:SetHover()
+	end
 end
 
 function Element:RenderChildren(x, y)

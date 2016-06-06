@@ -21,7 +21,7 @@ function Element:RenderChildren(x, y)
 		if not Child.Hidden then
 			local Horizontal, Vertical = Child:GetPosition()
 			local ChildX, ChildY = Horizontal + x, Vertical + y
-
+			
 			Child:Render(ChildX, ChildY)
 			if Child.RenderChildren then
 				Child:RenderChildren(ChildX, ChildY, IntersectX, IntersectY, IntersectWi)
